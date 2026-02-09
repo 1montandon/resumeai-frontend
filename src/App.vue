@@ -2,6 +2,8 @@
 import { RouterView } from 'vue-router'
 import { useAnalysisStore } from '@/stores/analysis'
 import { useAuthStore } from '@/stores/auth'
+import Footer from './components/FooterComponent.vue'
+import Header from './components/HeaderComponent.vue'
 
 const analysisStore = useAnalysisStore()
 const authStore = useAuthStore()
@@ -11,7 +13,13 @@ const authStore = useAuthStore()
   <div v-if="analysisStore.isLoading || authStore.isLoading" class="loading-overlay">
     Loading...
   </div>
-  <RouterView />
+  <div class="bg-slate-50 min-h-svh">
+    <Header></Header>
+    <div class="mt-20">
+      <RouterView />
+    </div>
+    <Footer></Footer>
+  </div>
 </template>
 
 <style scoped>

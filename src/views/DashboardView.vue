@@ -22,85 +22,109 @@ function progressBarColor(score: number) {
   if (score <= 85) return '#52C41A' // green
   return '#0D80F2' // blue
 }
-
 </script>
 
 <template>
-  <Header />
-  <div class="flex flex-col px-60 h-svh justify-start gap-8 mt-10">
-    <div class="flex flex-col gap-3">
-      <h1 class="font-bold text-3xl text-[#0D141C]">Dashboard</h1>
-      <p class="text-[#4A739C]">
-        Welcome back {{ authStore.user.username }}, Here's a summary of your recent activity.
+  <div class="bg-slate-50 px-20 py-12 flex flex-col gap-10">
+    <!-- Header -->
+    <div class="flex flex-col gap-2">
+      <h1 class="font-bold text-3xl text-slate-800">Dashboard</h1>
+      <p class="text-slate-600">
+        Welcome back {{ authStore.user.username }}, here's a summary of your recent activity.
       </p>
     </div>
-    <div class="flex flex-row justify-between">
-      <div class="w-80 h-24 b-1 rounded-xl border border-[#CFDBE8] p-6">
-        <p class="font-medium text-base text-[#0D141C]">Total Analysis</p>
-        <h3 class="font-bold text-2xl text-[#0D141C]">{{ analysisStore.analyses.length }}</h3>
-      </div>
-      <div class="w-80 h-24 b-1 rounded-xl border border-[#CFDBE8] p-6">
-        <p class="font-medium text-base text-[#0D141C]">Average Compatibility Score</p>
-        <h3 class="font-bold text-2xl text-[#0D141C]">
-          {{ (compatibilityScore / analysisStore.analyses.length).toFixed(2) }} %
+
+    <!-- Stats -->
+    <div class="flex flex-row justify-between gap-6">
+      <div
+        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
+      >
+        <p class="text-sm font-medium text-slate-500">Total Analyses</p>
+        <h3 class="mt-1 text-2xl font-bold text-slate-800">
+          {{ analysisStore.analyses.length }}
         </h3>
       </div>
-      <div class="w-80 h-24 b-1 rounded-xl border border-[#CFDBE8] p-6">
-        <p class="font-medium text-base text-[#0D141C]">Analysis Generated</p>
-        <h3 class="font-bold text-2xl text-[#0D141C]">{{ analysisStore.analyses.length }}</h3>
+
+      <div
+        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
+      >
+        <p class="text-sm font-medium text-slate-500">Average Compatibility</p>
+        <h3 class="mt-1 text-2xl font-bold text-slate-800">
+          {{ (compatibilityScore / analysisStore.analyses.length).toFixed(2) }}%
+        </h3>
+      </div>
+
+      <div
+        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
+      >
+        <p class="text-sm font-medium text-slate-500">Analyses Generated</p>
+        <h3 class="mt-1 text-2xl font-bold text-slate-800">
+          {{ analysisStore.analyses.length }}
+        </h3>
       </div>
     </div>
-    <div class="flex flex-col gap-8 items-center">
-      <h2 class="font-bold text-2xl self-start text-[#0D141C]">Recent Analysis</h2>
-      <div class="overflow-hidden rounded-lg border border-[#CFDBE8] w-full flex justify-center">
-        <table class="text-sm text-left w-full">
-          <thead class="text-xs text-[#0D141C] bg-[#F7FAFC]">
+
+    <!-- Table -->
+    <div class="flex flex-col gap-4">
+      <h2 class="font-bold text-2xl text-slate-800">Recent Analyses</h2>
+
+      <div class="overflow-hidden rounded-xl border border-slate-200 bg-white/90">
+        <table class="w-full text-sm text-left">
+          <thead class="bg-slate-100 text-slate-700 text-xs">
             <tr>
-              <th class="px-6 py-3 text-center">Id</th>
-              <th class="px-6 py-3 text-center">Job Desc</th>
-              <th class="px-6 py-3 text-center">Overview</th>
-              <th class="px-6 py-3 text-center">Compatibility Score</th>
-              <th class="px-6 py-3 text-center">Action</th>
+              <th class="px-6 py-4 text-center">ID</th>
+              <th class="px-6 py-4 text-center">Job Description</th>
+              <th class="px-6 py-4 text-center">Overview</th>
+              <th class="px-6 py-4 text-center">Compatibility</th>
+              <th class="px-6 py-4 text-center">Action</th>
             </tr>
           </thead>
-          <tbody class="text-[#0D141C]">
+
+          <tbody>
             <tr
               v-for="analysis in analysisStore.analyses"
               :key="analysis.id"
-              class="bg-[#F7FAFC] border-b border-t border-[#CFDBE8] text-center"
+              class="border-t border-slate-200 odd:bg-white even:bg-slate-50 text-center"
             >
-              <td class="px-6 py-8 font-medium text-[#0D141C] whitespace-nowrap text-center">
+              <td class="px-6 py-6 font-medium text-slate-700">
                 {{ analysis.id }}
               </td>
-              <td class="px-6 py-8 font-medium text-[#0D141C] whitespace-nowrap text-center">
+
+              <td class="px-6 py-6 text-slate-600">
                 {{ analysis.jobDescription.slice(0, 45) }}...
               </td>
-              <td class="px-6 py-8 font-medium text-[#0D141C] whitespace-nowrap text-center">
-                {{ analysis.overview.slice(0, 45) }}...
-              </td>
-              <td class="px-6 py-8 font-medium text-[#0D141C] whitespace-nowrap text-center">
-                <div class="flex items-center gap-2 justify-center">
-                  <div class="bg-[#CFDBE8] rounded-full h-2.5 w-24">
+
+              <td class="px-6 py-6 text-slate-600">{{ analysis.overview.slice(0, 45) }}...</td>
+
+              <td class="px-6 py-6">
+                <div class="flex items-center justify-center gap-3">
+                  <div class="h-2.5 w-24 rounded-full bg-slate-200">
                     <div
-                      class=" h-2.5 rounded-full"
-                      :style="{ width: analysis.score * 100 + '%', backgroundColor: progressBarColor(analysis.score * 100) }"
-                    ></div>
+                      class="h-2.5 rounded-full bg-blue-600 transition-all"
+                      :style="{ width: analysis.score * 100 + '%' }"
+                    />
                   </div>
-                  <p>{{ analysis.score * 100 }}%</p>
+                  <span class="text-sm text-slate-600"> {{ analysis.score * 100 }}% </span>
                 </div>
               </td>
-              <td class="px-6 py-8 font-medium text-[#0D141C] whitespace-nowrap">
-                <router-link :to="`/analysis/${analysis.id}`" class="text-blue-600 hover:underline"
-                  >View Analysis</router-link
+
+              <td class="px-6 py-6">
+                <router-link
+                  :to="`/analysis/${analysis.id}`"
+                  class="text-blue-600 font-medium hover:text-blue-500 transition"
                 >
+                  View analysis →
+                </router-link>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <!-- CTA -->
     <div class="flex justify-end">
-      <Button type="primary" to="/analysis" text="Start new Analysis" :block="false"></Button>
+      <Button type="primary" to="/analysis" text="Start new analysis" :block="false" />
     </div>
   </div>
 </template>

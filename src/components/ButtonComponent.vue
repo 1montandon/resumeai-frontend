@@ -26,8 +26,8 @@ const router = useRouter()
 const buttonClass = computed(() =>
   [
     props.type === 'primary'
-      ? 'bg-[#0D80F2] px-7 py-3 rounded-lg font-semibold text-sm text-[#F7FAFC] hover:cursor-pointer active:scale-90 ease-out duration-300'
-      : 'bg-[#E8EDF5] px-7 py-3 rounded-lg font-semibold text-sm text-[#0D141C] hover:cursor-pointer active:scale-90 ease-out duration-300',
+      ? 'bg-blue-600 hover:bg-blue-500 text-slate-50 px-5 py-3 rounded-lg font-medium transition'
+      : 'border border-slate-300 text-slate-700 hover:bg-slate-100 px-5 py-3 rounded-lg font-medium transition',
     props.block == true ? 'w-full' : '',
   ].join(' '),
 )

@@ -31,34 +31,34 @@ const handleRegister = async () => {
       @submit.prevent="handleRegister"
       class="flex flex-col justify-center items-center gap-6 w-md"
     >
-      <h1 class="text-4xl font-bold text-[#0D141C]">Get started for free</h1>
+      <h1 class="text-4xl font-bold text-slate-800">Get started for free</h1>
       <div class="flex flex-col gap-2">
-        <label for="username" class="text-[#0D141C]">Username</label>
+        <label for="username" class="text-slate-800">Username</label>
         <input
           id="username"
           v-model="username"
           type="text"
-          class="w-md h-10 border-2 text-[#0D141C] border-[#CFDBE8] rounded-lg px-4 py-6 placeholder-[#4A739C]"
+          class="w-md h-10 border-2 text-slate-800 border-slate-500 rounded-lg px-4 py-6 placeholder-slate-500"
           placeholder="Username"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label for="email" class="text-[#0D141C]">Email</label>
+        <label for="email" class="text-slate-800">Email</label>
         <input
           type="email"
           id="email"
           v-model="email"
-          class="w-md h-10 border-2 text-[#0D141C] border-[#CFDBE8] rounded-lg px-4 py-6 placeholder-[#4A739C]"
+          class="w-md h-10 border-2 text-slate-800 border-slate-500 rounded-lg px-4 py-6 placeholder-slate-500"
           placeholder="Email"
         />
       </div>
       <div class="flex flex-col gap-2">
-        <label for="password" class="text-[#0D141C]">Password</label>
+        <label for="password" class="text-slate-800">Password</label>
         <input
           type="password"
           id="password"
           v-model="password"
-          class="w-md h-10 border-2 text-[#0D141C] border-[#CFDBE8] rounded-lg px-4 py-6 placeholder-[#4A739C]"
+          class="w-md h-10 border-2 text-slate-800 border-slate-500 rounded-lg px-4 py-6 placeholder-slate-500"
           placeholder="Password"
         />
       </div>
