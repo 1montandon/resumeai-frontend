@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 const router = useRouter()
 const authStore = useAuthStore()
 function handleClick() {
-  router.push('/')
+  router.push('/dashboard')
 }
 
 // Example isLogged check (replace with your actual auth logic)
@@ -41,8 +41,12 @@ const closeMobileMenu = () => {
 
       <nav>
         <ul class="hidden md:flex flex-row gap-10 items-center">
-          <li class="font-medium text-slate-600 hover:text-blue-600 transition">Product</li>
-          <li class="font-medium text-slate-600 hover:text-blue-600 transition">Pricing</li>
+          <li class="font-medium text-slate-600 hover:text-blue-600 transition">
+            <router-link to="/"> Product </router-link>
+          </li>
+          <li class="font-medium text-slate-600 hover:text-blue-600 transition">
+            <router-link to="/"> Pricing </router-link>
+          </li>
 
           <li class="flex flex-row gap-5">
             <template v-if="!isLogged">
@@ -82,21 +86,21 @@ const closeMobileMenu = () => {
 
       <!-- Links -->
       <nav class="flex flex-col gap-6 mt-16">
-        <a
-          href="#product"
+        <router-link
+          to="/"
           class="text-2xl font-medium text-slate-700 hover:text-blue-600 transition"
           @click="closeMobileMenu"
         >
           Product
-        </a>
+        </router-link>
 
-        <a
-          href="#pricing"
+        <router-link
+          to="/"
           class="text-2xl font-medium text-slate-700 hover:text-blue-600 transition"
           @click="closeMobileMenu"
         >
           Pricing
-        </a>
+        </router-link>
       </nav>
 
       <!-- Actions -->

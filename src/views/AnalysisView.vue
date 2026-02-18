@@ -28,7 +28,7 @@ onMounted(() => {
 <template>
   <Header />
 
-  <div class="min-h-svh bg-slate-50 px-60 py-12 flex flex-col gap-12">
+  <div class="min-h-svh bg-slate-50 px-10 md:px-20 py-12 flex flex-col gap-12">
     <!-- Title -->
     <div class="flex flex-col gap-2">
       <h1 class="font-bold text-3xl text-slate-800">Resume Analysis</h1>

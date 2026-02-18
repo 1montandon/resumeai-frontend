@@ -30,33 +30,27 @@ function progressBarColor(score: number) {
     <div class="flex flex-col gap-2">
       <h1 class="font-bold text-3xl text-slate-800">Dashboard</h1>
       <p class="text-slate-600">
-        Welcome back {{ authStore.user.username }}, here's a summary of your recent activity.
+        Welcome back {{ authStore.user.username }}, here's a summary of your activity.
       </p>
     </div>
 
     <!-- Stats -->
     <div class="flex flex-row justify-between gap-6">
-      <div
-        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
-      >
+      <div class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6">
         <p class="text-sm font-medium text-slate-500">Total Analyses</p>
         <h3 class="mt-1 text-2xl font-bold text-slate-800">
           {{ analysisStore.analyses.length }}
         </h3>
       </div>
 
-      <div
-        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
-      >
+      <div class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6">
         <p class="text-sm font-medium text-slate-500">Average Compatibility</p>
         <h3 class="mt-1 text-2xl font-bold text-slate-800">
           {{ (compatibilityScore / analysisStore.analyses.length).toFixed(2) }}%
         </h3>
       </div>
 
-      <div
-        class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6 hover:shadow-sm transition"
-      >
+      <div class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6">
         <p class="text-sm font-medium text-slate-500">Analyses Generated</p>
         <h3 class="mt-1 text-2xl font-bold text-slate-800">
           {{ analysisStore.analyses.length }}
@@ -72,9 +66,9 @@ function progressBarColor(score: number) {
         <table class="w-full text-sm text-left">
           <thead class="bg-slate-100 text-slate-700 text-xs">
             <tr>
-              <th class="px-6 py-4 text-center">ID</th>
+              <th class="px-6 py-4 text-center justify-center hidden md:flex">ID</th>
               <th class="px-6 py-4 text-center">Job Description</th>
-              <th class="px-6 py-4 text-center">Overview</th>
+              <th class="px-6 py-4 text-center justify-center hidden md:flex">Overview</th>
               <th class="px-6 py-4 text-center">Compatibility</th>
               <th class="px-6 py-4 text-center">Action</th>
             </tr>
@@ -86,15 +80,17 @@ function progressBarColor(score: number) {
               :key="analysis.id"
               class="border-t border-slate-200 odd:bg-white even:bg-slate-50 text-center"
             >
-              <td class="px-6 py-6 font-medium text-slate-700">
+              <td class="px-6 py-6 font-medium text-slate-700 justify-center hidden md:flex">
                 {{ analysis.id }}
               </td>
 
-              <td class="px-6 py-6 text-slate-600">
-                {{ analysis.jobDescription.slice(0, 45) }}...
+              <td class="px-6 py-6 text-slate-600 ">
+                {{ analysis.jobDescription.slice(0, 20) }}...
               </td>
 
-              <td class="px-6 py-6 text-slate-600">{{ analysis.overview.slice(0, 45) }}...</td>
+              <td class="px-6 py-6 text-slate-600 justify-center hidden md:flex">
+                {{ analysis.overview.slice(0, 45) }}...
+              </td>
 
               <td class="px-6 py-6">
                 <div class="flex items-center justify-center gap-3">
