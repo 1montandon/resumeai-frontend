@@ -11,6 +11,16 @@ const router = createRouter({
       component: LandingView,
     },
     {
+      path: '/pricing',
+      name: 'pricing',
+      component: () => import('@/views/PricingView.vue'),
+    },
+    {
+      path: '/account-settings',
+      name: 'accont-settings',
+      component: () => import('@/views/AccountView.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue'),

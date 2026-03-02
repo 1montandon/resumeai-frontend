@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CircleUserRound } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 import Button from './ButtonComponent.vue'
 import { useRouter } from 'vue-router'
@@ -16,6 +17,7 @@ const isLogged = computed(() => {
 })
 function logout() {
   authStore.logout()
+  toggleMenu()
   alert('Logged Out. Redirecting to home page...')
   router.push('/')
 }
@@ -28,6 +30,16 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
+}
+
+const isMenuOpen = ref(false)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const closeMenu = () => {
+  isMenuOpen.value = false
 }
 </script>
 
@@ -42,13 +54,13 @@ const closeMobileMenu = () => {
       <nav>
         <ul class="hidden md:flex flex-row gap-10 items-center">
           <li class="font-medium text-slate-600 hover:text-blue-600 transition">
-            <router-link to="/"> Product </router-link>
+            <router-link to="/" @click="closeMenu"> Product </router-link>
           </li>
           <li class="font-medium text-slate-600 hover:text-blue-600 transition">
-            <router-link to="/"> Pricing </router-link>
+            <router-link to="/pricing" @click="closeMenu"> Pricing </router-link>
           </li>
 
-          <li class="flex flex-row gap-5">
+          <li class="flex flex-row gap-5 items-center">
             <template v-if="!isLogged">
               <Button text="Get started" type="primary" to="/register" />
               <Button text="Log in" type="secundary" to="/login" />
@@ -56,7 +68,11 @@ const closeMobileMenu = () => {
 
             <template v-else>
               <Button text="Dashboard" type="primary" to="/dashboard" />
-              <Button text="Log out" type="secundary" @click="logout()" />
+              <CircleUserRound
+                class="text-slate-600 border-slate-200 cursor-pointer pl-3 border-l"
+                :size="44"
+                @click="toggleMenu"
+              ></CircleUserRound>
             </template>
           </li>
         </ul>
@@ -70,6 +86,20 @@ const closeMobileMenu = () => {
       </nav>
     </div>
   </header>
+  <div
+    class="rounded-xl border border-slate-200 bg-white/90 flex flex-col gap-3 text-left p-5 z-51 right-20"
+    :class="isMenuOpen ? 'absolute' : 'hidden'"
+  >
+    <!-- User Header -->
+    <div class="pb-3 border-b border-slate-200">
+      <p class="font-semibold text-slate-800">{{ authStore.user?.username }}</p>
+      <p class="text-sm text-slate-600">{{ authStore.user?.email }}</p>
+    </div>
+
+    <!-- Menu Options -->
+    <Button text="Account Settings" type="primary" to="/account-settings" @click="closeMenu" />
+    <Button text="Log out" type="secondary" @click="logout()" />
+  </div>
 
   <!-- Mobile Menu -->
   <div
