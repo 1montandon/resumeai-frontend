@@ -3,14 +3,15 @@ import { onMounted, computed } from 'vue'
 import Header from '@/components/HeaderComponent.vue'
 import Button from '@/components/ButtonComponent.vue'
 import { useAnalysisStore } from '@/stores/analysis'
-import analysis from '@/services/analysis'
+import { FileText } from 'lucide-vue-next'
 
-const props = defineProps<{ id: string | number }>()
+const props = defineProps<{ id: string }>()
 const analysisStore = useAnalysisStore()
 
 const compatibilityScore = computed(() =>
   analysisStore.analysis ? analysisStore.analysis.score * 100 : 0,
 )
+console.log(analysisStore.analysis?.score)
 
 const progressBarColor = computed(() => {
   const score = compatibilityScore.value
@@ -40,7 +41,20 @@ onMounted(() => {
     <!-- Score Card -->
     <div class="rounded-xl border border-slate-200 bg-white/90 p-8 flex flex-col gap-4">
       <div class="flex justify-between items-center">
-        <h3 class="font-semibold text-slate-700">Compatibility Score</h3>
+        <div class="flex items-center gap-3">
+          <h3 class="font-semibold text-slate-700">Compatibility Score</h3>
+          <span
+            v-if="analysisStore.analysis?.aiUsed"
+            class="px-2.5 py-1 text-xs font-medium rounded-full"
+            :class="
+              analysisStore.analysis.aiUsed === 'gemini'
+                ? 'bg-blue-100 text-blue-700'
+                : 'bg-purple-100 text-purple-700'
+            "
+          >
+            {{ analysisStore.analysis.aiUsed === 'gemini' ? 'Gemini AI' : 'Ollama' }}
+          </span>
+        </div>
         <span class="font-bold text-slate-800"> {{ compatibilityScore }}% </span>
       </div>
 
@@ -54,6 +68,30 @@ onMounted(() => {
       <p class="text-sm text-slate-500">
         This score reflects how closely your resume matches the job requirements.
       </p>
+    </div>
+
+    <!-- Resume Info Card -->
+    <div
+      v-if="analysisStore.analysis?.resume"
+      class="rounded-xl border border-slate-200 bg-white/90 p-6 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-4">
+        <div class="p-3 rounded-lg bg-blue-50">
+          <FileText class="h-6 w-6 text-blue-600" />
+        </div>
+        <div>
+          <h3 class="font-semibold text-slate-800">
+            {{ analysisStore.analysis.resume.resumeTitle }}
+          </h3>
+          <p class="text-sm text-slate-500">Resume used for this analysis</p>
+        </div>
+      </div>
+      <router-link
+        to="/resumes"
+        class="text-sm font-medium text-blue-600 hover:text-blue-700 transition"
+      >
+        View all resumes →
+      </router-link>
     </div>
 
     <!-- Strengths & Weaknesses -->

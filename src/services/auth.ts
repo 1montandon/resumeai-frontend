@@ -1,30 +1,32 @@
 import api from '@/plugins/api'
 import type {
-  LoginUserResponse,
-  LoginUserDTO,
-  RegisterUserDTO,
-  RegisterUserResponse,
+  LoginResponse,
+  LoginDTO,
+  RegisterDTO,
+  RegisterResponse,
   User,
 } from '@/types/auth'
 
 class AuthService {
-  async loginUser(user: LoginUserDTO): Promise<string> {
+  async login(data: LoginDTO): Promise<string> {
     try {
-      const response = await api.post<LoginUserResponse>('login/', user)
+      const response = await api.post<LoginResponse>('login/', data)
       return response.data.accessToken
     } catch (error) {
       throw error
     }
   }
-  async registerUser(user: RegisterUserDTO): Promise<RegisterUserResponse> {
+
+  async register(data: RegisterDTO): Promise<RegisterResponse> {
     try {
-      const response = await api.post<RegisterUserResponse>('register/', user)
+      const response = await api.post<RegisterResponse>('register/', data)
       return response.data
     } catch (error) {
       throw error
     }
   }
-  async getMeUser(): Promise<User> {
+
+  async getMe(): Promise<User> {
     try {
       const response = await api.get<User>('user/')
       return response.data

@@ -2,13 +2,14 @@ import { reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import AuthService from '@/services/auth'
-import type { LoginUserDTO, RegisterUserDTO } from '@/types/auth'
+import type { LoginDTO, RegisterDTO, User } from '@/types/auth'
 import { useAnalysisStore } from './analysis'
 
 const authService = AuthService
+
 export const useAuthStore = defineStore('auth', () => {
   const state = reactive({
-    user: useStorage('user', {}),
+    user: useStorage('user', {} as User),
     access: useStorage('access', ''),
     isLoading: false,
     isLogged: useStorage('isLogged', false),
@@ -23,35 +24,34 @@ export const useAuthStore = defineStore('auth', () => {
     state.access = ''
     state.isLogged = false
   }
+
   const setToken = (token: string) => {
     state.access = token
     state.isLogged = true
   }
 
-  const loginUser = async (user: LoginUserDTO) => {
+  const login = async (data: LoginDTO) => {
     clearToken()
     state.isLoading = true
     try {
-      const response = await authService.loginUser(user)
+      const response = await authService.login(data)
       setToken(response)
-      // notify.success('Login realizado com sucesso!')
       return response
     } catch (error) {
       console.log(error)
       clearToken()
     } finally {
-      state.user = await authService.getMeUser()
+      state.user = await authService.getMe()
       state.isLogged = true
       state.isLoading = false
     }
   }
 
-  const registerUser = async (user: RegisterUserDTO) => {
+  const register = async (data: RegisterDTO) => {
     clearToken()
     state.isLoading = true
     try {
-      const response = await authService.registerUser(user)
-      // notify.success('Login realizado com sucesso!')
+      const response = await authService.register(data)
       return response
     } catch (error) {
       console.log(error)
@@ -60,10 +60,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const getMeUser = async () => {
+  const getMe = async () => {
     state.isLoading = true
     try {
-      const response = await authService.getMeUser()
+      const response = await authService.getMe()
       state.user = response
       return response
     } catch (error) {
@@ -72,13 +72,23 @@ export const useAuthStore = defineStore('auth', () => {
       state.isLoading = false
     }
   }
-  // dentro do método onde for usar:
+
   const logout = () => {
-    const analysisStore = useAnalysisStore() // ✅ aqui pode
+    const analysisStore = useAnalysisStore()
     analysisStore.clearAnalyses()
     clearToken()
-    state.user = {}
+    state.user = {} as User
   }
 
-  return { loginUser, registerUser, getMeUser, user, token, isLoading, isLogged, state, logout }
+  return {
+    user,
+    token,
+    isLoading,
+    isLogged,
+    state,
+    login,
+    register,
+    getMe,
+    logout,
+  }
 })

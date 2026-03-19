@@ -1,28 +1,38 @@
-export interface LoginUserResponse {
-  accessToken: string
-}
-export interface LoginUserDTO {
-  username: string
-  password: string
-}
-export interface RegisterUserDTO {
-  email: string
-  username: string
-  password: string
-}
-export interface RegisterUserResponse {
-  id: string
-  email: string
-  username: string
-}
-
-import type { Analysis } from './analysis'
+// ==================== Entities ====================
 
 export interface User {
   id: string
   email: string
   username: string
-  password: string
-  analyses?: Analysis[]
   createdAt: Date
+  updatedAt: Date
+}
+
+// ==================== API Responses ====================
+
+export interface LoginResponse {
+  accessToken: string
+}
+
+export interface RegisterResponse {
+  id: string
+  email: string
+  username: string
+}
+
+export interface UserResponse {
+  user: User
+}
+
+// ==================== DTOs ====================
+
+export interface LoginDTO {
+  username: string
+  password: string
+}
+
+export interface RegisterDTO {
+  email: string
+  username: string
+  password: string
 }

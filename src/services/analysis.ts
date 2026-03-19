@@ -1,30 +1,29 @@
 import api from '@/plugins/api'
-import type { CreateAnalysis, Analysis } from '@/types/analysis'
+import type { Analysis, AnalysesResponse, AnalysisResponse } from '@/types/analysis'
 
 class AnalysisService {
   async getAnalyses(): Promise<Analysis[]> {
     try {
-      const response = await api.get<Analysis[]>('analysis/')
-      console.log(response.data)
-      return response.data
+      const response = await api.get<AnalysesResponse>('analysis/')
+      return response.data.analyses
     } catch (error) {
       throw error
     }
   }
-  async createAnalysis(analysis: FormData): Promise<Analysis> {
-    try {
-      const response = await api.post<Analysis>('analysis/', analysis)
 
-      return response.data
+  async createAnalysis(data: FormData): Promise<Analysis> {
+    try {
+      const response = await api.post<AnalysisResponse>('analysis/', data)
+      return response.data.analysis
     } catch (error) {
       throw error
     }
   }
-  async getAnalysisById(analysisId: string | number): Promise<Analysis> {
+
+  async getAnalysisById(analysisId: string): Promise<Analysis> {
     try {
-      const response = await api.get<Analysis>(`analysis/${analysisId}/`)
-      console.log(response)
-      return response.data
+      const response = await api.get<AnalysisResponse>(`analysis/${analysisId}/`)
+      return response.data.analysis
     } catch (error) {
       throw error
     }

@@ -13,7 +13,7 @@ const route = useRoute()
 
 const handleLogin = async () => {
   try {
-    await authStore.loginUser({ username: username.value, password: password.value })
+    await authStore.login({ username: username.value, password: password.value })
     // 👇 Verifica se há redirecionamento salvo
     const redirect = (route.query.redirect as string) || '/dashboard' // fallback opcional
 

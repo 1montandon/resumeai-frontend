@@ -49,11 +49,18 @@ const router = createRouter({
       props: true,
       meta: { requiresAuth: true },
     },
+    {
+      path: '/resumes',
+      name: 'resumes',
+      component: () => import('@/views/ResumesView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
 router.beforeEach((to, from) => {
   const authStore = useAuthStore()
+  authStore.getMe()
   // instead of having to check every route record with
   // to.matched.some(record => record.meta.requiresAuth)
   if (to.meta.requiresAuth && !authStore.isLogged) {

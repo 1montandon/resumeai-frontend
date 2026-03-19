@@ -59,6 +59,9 @@ const closeMenu = () => {
           <li class="font-medium text-slate-600 hover:text-blue-600 transition">
             <router-link to="/pricing" @click="closeMenu"> Pricing </router-link>
           </li>
+          <li v-if="isLogged" class="font-medium text-slate-600 hover:text-blue-600 transition">
+            <router-link to="/resumes" @click="closeMenu"> Resumes </router-link>
+          </li>
 
           <li class="flex flex-row gap-5 items-center">
             <template v-if="!isLogged">

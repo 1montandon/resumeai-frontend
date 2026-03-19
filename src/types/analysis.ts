@@ -1,27 +1,36 @@
+import type { Resume } from './resume'
+
+// ==================== Entities ====================
+
 export interface Analysis {
   id: string
   jobDescription: string
   score: number
-  strengths: string
-  weaknesses: string
+  strengths: string // JSON string
+  weaknesses: string // JSON string
   overview: string
-  resumeUrl: string
+  aiUsed: string
+  resumeId: string
+  resume: Pick<Resume, 'id' | 'resumeTitle'>
   userId: string
   createdAt: Date
-}
-export interface CreateAnalysis {
-  description: string
-  resume: File | null
+  updatedAt: Date
 }
 
-export interface ParsedAnalysis {
-  id: string
-  jobDescription: string
-  score: number
-  strengths: string[]
-  weaknesses: string[]
-  overview: string
-  resumeUrl: string
-  userId: string
-  createdAt: Date
+// ==================== API Responses ====================
+
+export interface AnalysesResponse {
+  analyses: Analysis[]
+}
+
+export interface AnalysisResponse {
+  analysis: Analysis
+}
+
+// ==================== DTOs ====================
+
+export interface CreateAnalysisDTO {
+  description: string
+  resume?: File
+  resumeId?: string
 }

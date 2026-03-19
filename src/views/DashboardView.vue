@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import Header from '@/components/HeaderComponent.vue'
 import Button from '@/components/ButtonComponent.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useAnalysisStore } from '@/stores/analysis'
@@ -46,7 +45,7 @@ function progressBarColor(score: number) {
       <div class="w-80 rounded-xl border border-slate-200 bg-white/90 p-6">
         <p class="text-sm font-medium text-slate-500">Average Compatibility</p>
         <h3 class="mt-1 text-2xl font-bold text-slate-800">
-          {{ (compatibilityScore / analysisStore.analyses.length).toFixed(2) }}%
+          {{ (compatibilityScore / analysisStore.analyses.length) }}%
         </h3>
       </div>
 
@@ -66,10 +65,12 @@ function progressBarColor(score: number) {
         <table class="w-full text-sm text-left">
           <thead class="bg-slate-100 text-slate-700 text-xs">
             <tr>
-              <th class="px-6 py-4 text-center justify-center hidden md:flex">ID</th>
+              <th class="px-6 py-4 text-center justify-center hidden md:flex">Resume Title</th>
               <th class="px-6 py-4 text-center">Job Description</th>
               <th class="px-6 py-4 text-center justify-center hidden md:flex">Overview</th>
               <th class="px-6 py-4 text-center">Compatibility</th>
+              <th class="px-6 py-4 text-center">Ai Used</th>
+
               <th class="px-6 py-4 text-center">Action</th>
             </tr>
           </thead>
@@ -81,10 +82,10 @@ function progressBarColor(score: number) {
               class="border-t border-slate-200 odd:bg-white even:bg-slate-50 text-center"
             >
               <td class="px-6 py-6 font-medium text-slate-700 justify-center hidden md:flex">
-                {{ analysis.id }}
+                {{ analysis.resume.resumeTitle }}
               </td>
 
-              <td class="px-6 py-6 text-slate-600 ">
+              <td class="px-6 py-6 text-slate-600">
                 {{ analysis.jobDescription.slice(0, 20) }}...
               </td>
 
@@ -102,6 +103,10 @@ function progressBarColor(score: number) {
                   </div>
                   <span class="text-sm text-slate-600"> {{ analysis.score * 100 }}% </span>
                 </div>
+              </td>
+
+              <td class="px-6 py-6 text-slate-600 justify-center hidden md:flex">
+                {{ analysis.aiUsed }}...
               </td>
 
               <td class="px-6 py-6">

@@ -1,9 +1,7 @@
 import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { useStorage } from '@vueuse/core'
 import AnalysisService from '@/services/analysis'
-import type { Analysis, CreateAnalysis, ParsedAnalysis } from '@/types/analysis'
-import analysis from '@/services/analysis'
+import type { Analysis, CreateAnalysisDTO } from '@/types/analysis'
 
 const analysisService = AnalysisService
 
@@ -22,20 +20,6 @@ export const useAnalysisStore = defineStore('analysis', () => {
     state.analyses = []
   }
 
-  //   function parseAnalyses(data: Analysis[]): ParsedAnalysis[] {
-  //   return data.map((item) => ({
-  //     id: item.id,
-  //     jobDescription: item.jobDescription,
-  //     score: item.score,
-  //     strengths: JSON.parse(item.strengths),
-  //     weaknesses: JSON.parse(item.weaknesses),
-  //     overview: item.overview,
-  //     resumeUrl: item.resumeUrl,
-  //     userId: item.userId,
-  //     createdAt: new Date(item.createdAt),
-  //   }));
-  // }
-
   const getAnalyses = async () => {
     state.isLoading = true
     try {
@@ -49,18 +33,20 @@ export const useAnalysisStore = defineStore('analysis', () => {
       state.isLoading = false
     }
   }
-  const createAnalysis = async (analysis: CreateAnalysis) => {
+
+  const createAnalysis = async (data: CreateAnalysisDTO) => {
     state.isLoading = true
     try {
       const formData = new FormData()
-      if (analysis.resume) {
-        formData.append('resume', analysis.resume)
+      if (data.resume) {
+        formData.append('resume', data.resume)
       }
-      formData.append('description', analysis.description)
-      console.log(formData)
+      if (data.resumeId) {
+        formData.append('resumeId', data.resumeId)
+      }
+      formData.append('description', data.description)
 
       const response = await analysisService.createAnalysis(formData)
-      // Optionally update local state
       await getAnalyses()
       return response
     } catch (error) {
@@ -69,7 +55,8 @@ export const useAnalysisStore = defineStore('analysis', () => {
       state.isLoading = false
     }
   }
-  const getAnalysisById = async (id: string | number) => {
+
+  const getAnalysisById = async (id: string) => {
     state.isLoading = true
     try {
       const response = await analysisService.getAnalysisById(id)
@@ -82,14 +69,15 @@ export const useAnalysisStore = defineStore('analysis', () => {
       state.isLoading = false
     }
   }
+
   return {
     analyses,
     isLoading,
-    getAnalyses,
-    clearAnalyses,
+    analysis,
     state,
+    getAnalyses,
     createAnalysis,
     getAnalysisById,
-    analysis,
+    clearAnalyses,
   }
 })

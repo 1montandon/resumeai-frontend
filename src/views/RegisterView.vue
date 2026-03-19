@@ -12,7 +12,7 @@ const authStore = useAuthStore()
 const router = useRouter()
 const handleRegister = async () => {
   try {
-    const res = await authStore.registerUser({
+    const res = await authStore.register({
       username: username.value,
       password: password.value,
       email: email.value,
